@@ -1,0 +1,13 @@
+fastapi
+uvicorn[standard]
+gunicorn
+sqlalchemy
+psycopg2-binary
+alembic
+passlib
+python-jose[cryptography]
+pydantic-settings
+email-validator
+redis
+celery
+sentry-sdk

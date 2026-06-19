@@ -1,0 +1,20 @@
+{
+  "typeCheckingMode": "basic",
+  "venvPath": ".",
+  "venv": ".venv",
+  "useLibraryCodeForTypes": true,
+  "exclude": [
+    "**/.venv",
+    "**/venv",
+    "backend/.venv",
+    "backend/venv",
+    "**/alembic",
+    "**/migrations",
+    "**/__pycache__",
+    "**/*.pyc",
+    "app/services/oracleJdk-26",
+    "**/pyright-output.json",
+    "**/pyright_output.json",
+    "**/pyright_result.json"
+  ]
+}

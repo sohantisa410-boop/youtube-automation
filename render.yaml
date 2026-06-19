@@ -1,0 +1,61 @@
+services:
+  - type: web
+    name: youtube-automation-backend
+    runtime: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: youtube-automation-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: youtube-automation-redis
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: CORS_ORIGINS
+        value: "https://your-frontend.example.com"
+      - key: APP_ENV
+        value: production
+      - key: TESTING
+        value: "false"
+      - key: LOG_LEVEL
+        value: INFO
+      - key: RATE_LIMIT_PER_MINUTE
+        value: "120"
+      - key: APP_NAME
+        value: "YouTube Automation System"
+
+  - type: worker
+    name: youtube-automation-worker
+    runtime: python
+    rootDir: workers
+    buildCommand: pip install -r requirements.txt
+    startCommand: celery -A tasks.celery_app.celery_app worker -l info
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: youtube-automation-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: youtube-automation-redis
+          property: connectionString
+
+  - type: redis
+    name: youtube-automation-redis
+    plan: free
+    ipAllowList: []
+
+databases:
+  - name: youtube-automation-db
+    databaseName: youtube_automation
+    user: postgres
+    plan: free
+
