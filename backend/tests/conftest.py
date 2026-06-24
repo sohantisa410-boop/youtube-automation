@@ -28,6 +28,8 @@ def client():
 
 @pytest.fixture(scope="function")
 def db_session():
+    
+    
     session = SessionLocal()
     try:
         yield session
@@ -37,6 +39,7 @@ def db_session():
 
 @pytest.fixture(scope="function")
 def auth_token(client):
+    
     payload = {
         "email": "test@example.com",
         "full_name": "Test User",

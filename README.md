@@ -28,10 +28,13 @@ A full-stack platform for automated YouTube channel management, AI-powered video
 copy .env.example .env
 copy backend\.env.example backend\.env
 copy frontend\.env.example frontend\.env
+copy workers\.env.example workers\.env
 ```
 
-2. Update values in `backend/.env` and `frontend/.env`.
-3. Start the stack:
+1. Update values in `backend/.env`, `frontend/.env`, and `workers/.env`.
+   - For `backend/.env`: Ensure DATABASE_URL matches docker-compose (postgresql+psycopg2://postgres:postgres@db:5432/youtube_automation)
+   - For `workers/.env`: Set REDIS_URL=redis://redis:6379/0
+1. Start the stack:
 
 ```bash
 docker-compose up --build

@@ -29,7 +29,13 @@ def thumbnail_generator_worker(title: str):
     return {"thumbnail_path": "storage/thumbnails/thumb_from_worker.png"}
 
 
-@celery_app.task(bind=True, name="tasks.jobs.upload_worker", autoretry_for=(Exception,), retry_backoff=True, retry_kwargs={"max_retries": 3})
+@celery_app.task(
+    bind=True,
+    name="tasks.jobs.upload_worker",
+    autoretry_for=(Exception,),
+    retry_backoff=True,
+    retry_kwargs={"max_retries": 3},
+)
 def upload_worker(self, video_id: int, channel_id: int):
     _ = (self, video_id, channel_id)
     return {"status": "uploaded", "video_id": video_id}
